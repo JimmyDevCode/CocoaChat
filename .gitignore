@@ -1,0 +1,14 @@
+.DS_Store
+
+# Xcode user data
+xcuserdata/
+*.xcuserstate
+*.xcworkspace/xcuserdata/
+
+# Build artifacts
+DerivedData/
+.build/
+build/
+
+# Local model files
+*.gguf

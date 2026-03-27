@@ -1,0 +1,15 @@
+{
+  "originHash" : "1c61ab86c8603f0fe42fe6c4f9fa0eb004bbecc65e441dca7f98ab5d7bbc87d4",
+  "pins" : [
+    {
+      "identity" : "cocoalm",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/JimmyDevCode/CocoaLM.git",
+      "state" : {
+        "revision" : "149fff95773791556c654d12800a3952ef4cc0e1",
+        "version" : "0.1.1"
+      }
+    }
+  ],
+  "version" : 3
+}
