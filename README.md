@@ -70,11 +70,6 @@ Current setup:
 - model strategy: `.bundleThenDocuments`
 - runtime repo: https://github.com/JimmyDevCode/CocoaLM
 
-## Demo
-
-Example app video:
-- [cocoachat-demo.mp4](Documentation/Examples/cocoachat-demo.mp4)
-
 ## Model file
 
 This repo does **not** commit the `.gguf` model file.
