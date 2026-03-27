@@ -1,4 +1,3 @@
-import CocoaLM
 import Foundation
 import Observation
 
@@ -11,11 +10,11 @@ final class ChatViewModel {
     var settings = GenerationSettings()
     var isShowingSettings = false
 
-    private let service = CocoaLMService()
-    private var session: CocoaLMSession?
+    private let service: any ChatInferenceServicing
+    private var session: (any ChatSessioning)?
 
     var modelName: String {
-        service.modelDisplayName()
+        service.modelDisplayName
     }
 
     let promptChips: [PromptChip] = [
@@ -24,6 +23,10 @@ final class ChatViewModel {
         .init(title: String(localized: AppStrings.Chat.chipExplainTitle), prompt: String(localized: AppStrings.Chat.chipExplainPrompt)),
         .init(title: String(localized: AppStrings.Chat.chipBrainstormTitle), prompt: String(localized: AppStrings.Chat.chipBrainstormPrompt))
     ]
+
+    init(service: any ChatInferenceServicing) {
+        self.service = service
+    }
 
     var canSend: Bool {
         !draft.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && !isGenerating
@@ -48,7 +51,7 @@ final class ChatViewModel {
         status = .loading
 
         do {
-            session = try service.loadSession(settings: settings)
+            session = try service.makeSession(settings: settings)
             status = .ready
         } catch {
             session = nil
@@ -74,7 +77,7 @@ final class ChatViewModel {
         let history = Array(messages.dropLast().suffix(keepsContext ? 8 : 0))
 
         do {
-            let reply = try await service.generate(
+            let reply = try await service.generateReply(
                 session: activeSession,
                 messages: history,
                 latestUserPrompt: text,

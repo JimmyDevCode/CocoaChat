@@ -1,15 +1,45 @@
 import CocoaLM
 import Foundation
 
-struct CocoaLMService {
+protocol ChatSessioning: AnyObject {
+    func generate(userPrompt: String, systemPrompt: String) async throws -> String
+}
+
+protocol ChatInferenceServicing {
+    var modelDisplayName: String { get }
+    func makeSession(settings: GenerationSettings) throws -> any ChatSessioning
+    func generateReply(
+        session: any ChatSessioning,
+        messages: [ChatMessage],
+        latestUserPrompt: String,
+        keepsConversationContext: Bool
+    ) async throws -> String
+}
+
+final class CocoaLMChatSession: ChatSessioning {
+    private let session: CocoaLMSession
+
+    init(session: CocoaLMSession) {
+        self.session = session
+    }
+
+    func generate(userPrompt: String, systemPrompt: String) async throws -> String {
+        try await session.generate(
+            userPrompt: userPrompt,
+            systemPrompt: systemPrompt
+        )
+    }
+}
+
+struct CocoaLMChatService: ChatInferenceServicing {
     private let model = ModelCatalog.qwen15BInstructQ4
 
-    func modelDisplayName() -> String {
+    var modelDisplayName: String {
         model.displayName
     }
 
-    func loadSession(settings: GenerationSettings) throws -> CocoaLMSession {
-        try CocoaLMSession(
+    func makeSession(settings: GenerationSettings) throws -> any ChatSessioning {
+        let session = try CocoaLMSession(
             model: model,
             strategy: .bundleThenDocuments,
             generationConfig: GenerationConfig(
@@ -18,10 +48,12 @@ struct CocoaLMService {
                 temperature: settings.temperature
             )
         )
+
+        return CocoaLMChatSession(session: session)
     }
 
-    func generate(
-        session: CocoaLMSession,
+    func generateReply(
+        session: any ChatSessioning,
         messages: [ChatMessage],
         latestUserPrompt: String,
         keepsConversationContext: Bool

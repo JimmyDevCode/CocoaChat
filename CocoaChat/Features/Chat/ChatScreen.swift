@@ -2,11 +2,15 @@ import Observation
 import SwiftUI
 
 struct ChatScreen: View {
-    @State private var viewModel = ChatViewModel()
+    @State private var viewModel: ChatViewModel
     @FocusState private var isComposerFocused: Bool
 
     private var isCompactMode: Bool {
         viewModel.isGenerating
+    }
+
+    init(viewModel: ChatViewModel) {
+        _viewModel = State(initialValue: viewModel)
     }
 
     var body: some View {
@@ -19,7 +23,6 @@ struct ChatScreen: View {
             VStack(spacing: isCompactMode ? 12 : 18) {
                 ChatHeader(
                     status: viewModel.status,
-                    modelName: viewModel.modelName,
                     isCompact: isCompactMode,
                     onSettingsTap: {
                         viewModel.isShowingSettings = true
@@ -93,5 +96,7 @@ struct ChatScreen: View {
 }
 
 #Preview {
-    ChatScreen()
+    ChatScreen(
+        viewModel: ChatViewModel(service: CocoaLMChatService())
+    )
 }

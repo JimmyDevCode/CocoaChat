@@ -7,12 +7,29 @@
 
 import SwiftUI
 
+struct AppDependencies {
+    let chatInferenceService: any ChatInferenceServicing
+
+    @MainActor
+    func makeChatViewModel() -> ChatViewModel {
+        ChatViewModel(service: chatInferenceService)
+    }
+
+    static let live = AppDependencies(
+        chatInferenceService: CocoaLMChatService()
+    )
+}
+
 struct ContentView: View {
+    let dependencies: AppDependencies
+
     var body: some View {
-        ChatScreen()
+        ChatScreen(
+            viewModel: dependencies.makeChatViewModel()
+        )
     }
 }
 
 #Preview {
-    ContentView()
+    ContentView(dependencies: .live)
 }

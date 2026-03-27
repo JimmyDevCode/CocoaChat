@@ -2,7 +2,6 @@ import SwiftUI
 
 struct ChatHeader: View {
     let status: ModelStatus
-    let modelName: String
     let isCompact: Bool
     let onSettingsTap: () -> Void
 
