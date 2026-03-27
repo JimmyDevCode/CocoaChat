@@ -70,6 +70,15 @@ Current setup:
 - model strategy: `.bundleThenDocuments`
 - runtime repo: https://github.com/JimmyDevCode/CocoaLM
 
+## Screenshots
+
+<img src="Documentation/Screenshots/chat-screen-1.jpeg" width="260" alt="CocoaChat screenshot 1" />
+<img src="Documentation/Screenshots/chat-screen-2.jpeg" width="260" alt="CocoaChat screenshot 2" />
+<img src="Documentation/Screenshots/chat-screen-3.jpeg" width="260" alt="CocoaChat screenshot 3" />
+<img src="Documentation/Screenshots/chat-screen-4.jpeg" width="260" alt="CocoaChat screenshot 4" />
+<img src="Documentation/Screenshots/chat-screen-5.jpeg" width="260" alt="CocoaChat screenshot 5" />
+<img src="Documentation/Screenshots/chat-screen-6.jpeg" width="260" alt="CocoaChat screenshot 6" />
+
 ## Model file
 
 This repo does **not** commit the `.gguf` model file.
